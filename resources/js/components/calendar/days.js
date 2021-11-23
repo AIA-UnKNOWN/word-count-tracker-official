@@ -15,7 +15,7 @@ const PreviousMonthDay = ({ date, day }) => {
     })
       .then(data => data.chapter)
       .then(chapter => setValue(chapter.word_count))
-      .catch(error => console.log(`No word count for ${id}`));
+      .catch(error => null);
   }
 
   return (
@@ -27,7 +27,7 @@ const PreviousMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={() => getWordCount(id)}
+          onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
           id={id}
           value={value}
@@ -53,7 +53,7 @@ const CurrentMonthDay = ({ date, day }) => {
     })
       .then(data => data.chapter)
       .then(chapter => setValue(chapter.word_count))
-      .catch(error => console.log(`No word count for ${id}`));
+      .catch(error => null);
   }
 
   const isDateExactlyToday = day => {
@@ -76,7 +76,7 @@ const CurrentMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={() => getWordCount(id)}
+          onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
           id={id}
           value={value}
@@ -109,7 +109,7 @@ const NextMonthDay = ({ date, day }) => {
     response
       .then(data => data.chapter)
       .then(chapter => setValue(chapter.word_count))
-      .catch(error => console.log(`No word count for ${id}`));
+      .catch(error => null);
   }
 
   return (
@@ -121,7 +121,7 @@ const NextMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={() => getWordCount(id)}
+          onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
           id={id}
           value={value}
