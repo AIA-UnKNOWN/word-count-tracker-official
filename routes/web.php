@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::prefix('/api')->group(function () {
+    Route::get('/chapters', Api\ChaptersController::class)
+        ->name('get-chapters');
+    Route::get('/chapter/{id}', Api\GetChapterWordCountController::class)
+        ->name('get-chapter-word-count');
+    Route::put('/chapter/{id}/{wordCount}/save', Api\UpdateChapterController::class)
+        ->name('update-chapter');
 });

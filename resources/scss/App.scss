@@ -1,0 +1,13 @@
+.App {
+  width: 100%;
+  height: 100vh; // temporary
+  @include flex(center, center);
+
+  .calendar-container {
+    @include flex(center, flex-end);
+
+    @import 'components/Calendar';
+
+    @import 'components/WeeklyTracker';
+  }
+}

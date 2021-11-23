@@ -1,4 +1,4 @@
-require('./bootstrap');
+require('./libs/bootstrap');
 
 import ReactDOM from 'react-dom';
 import App from './App';

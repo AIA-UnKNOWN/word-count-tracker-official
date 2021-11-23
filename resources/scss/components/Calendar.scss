@@ -1,0 +1,49 @@
+.calendar {
+  width: 650px;
+  height: 700px;
+  background: $white;
+  border-radius: 20px;
+  margin-right: 46px;
+
+  .header {
+    border-radius: 20px 20px 0 0;
+    padding: 0 50px;
+    background: $violet;
+    color: $white;
+    height: 153px;
+    @include flex(space-between, center);
+
+    button {
+      border: none;
+      background: none;
+      color: $white;
+      transform: scale(4);
+      cursor: pointer;
+    }
+
+    .info {
+
+      .current-month {
+        font-size: 48px;
+        text-align: center;
+        font-weight: 600;
+        margin-bottom: 20px;
+      }
+
+      .date-today {
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  }
+
+  .current-month-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    height: calc(100% - 153px);
+    padding: 20px;
+
+    @import 'calendar/days';
+  }
+}
