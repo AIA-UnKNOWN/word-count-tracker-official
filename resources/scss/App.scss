@@ -5,6 +5,10 @@
 
   .calendar-container {
     @include flex(center, flex-end);
+    transform: scale(.9);
+    @include large-desktop {
+      transform: scale(1);
+    }
 
     @import 'components/Calendar';
 

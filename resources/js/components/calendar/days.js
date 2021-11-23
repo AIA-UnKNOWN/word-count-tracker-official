@@ -2,9 +2,17 @@ import { useState } from 'react';
 
 import { fetchWordCount, saveWordCount } from './server-requests';
 
+Number.prototype.pad = function(size) {
+  let numberString = String(this);
+  while (numberString.length < (size || 2)) {
+    numberString = "0" + numberString;
+  }
+  return numberString;
+}
+
 const PreviousMonthDay = ({ date, day }) => {
   const lastMonth = date.getLastDayOfLastMonthDate().getMonth();
-  const id = `${lastMonth}${day}${date.getFullYear()}`;
+  const id = `${lastMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
 
@@ -42,7 +50,7 @@ const PreviousMonthDay = ({ date, day }) => {
 }
 
 const CurrentMonthDay = ({ date, day }) => {
-  const id = `${date.getMonth()}${day}${date.getFullYear()}`;
+  const id = `${date.getMonth().pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
 
@@ -92,7 +100,7 @@ const CurrentMonthDay = ({ date, day }) => {
 
 const NextMonthDay = ({ date, day }) => {
   const nextMonth = date.getFirstDayOfNextMonthDate().getMonth();
-  const id = `${nextMonth}${day}${date.getFullYear()}`;
+  const id = `${nextMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
 
