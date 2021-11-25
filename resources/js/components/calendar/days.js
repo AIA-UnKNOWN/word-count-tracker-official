@@ -71,7 +71,6 @@ const CurrentMonthDay = ({ date, day }) => {
   const setClassName = () => {
     if (isDateExactlyToday(day)) return "day today";
     if (!isDateExactlyToday(day) && value !== 0) return "day has-word-count";
-
     return "day";
   }
 

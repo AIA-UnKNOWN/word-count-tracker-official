@@ -4,6 +4,7 @@ import MONTHS from '../utils/months';
 
 import { PreviousMonthDay, CurrentMonthDay, NextMonthDay } from './calendar/days';
 
+
 const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
   const [lastDaysOfPreviousMonth, setLastDaysOfPreviousMonth] = useState([]);
   const [currentDaysOfTheMonth, setCurrentDaysOfTheMonth] = useState([]);
@@ -25,35 +26,32 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
     const remainingDaysForFirstWeek = 7 - (firstDayOfTheMonthIndex + 1);
     const lastDaysOfLastMonth = 7 - (remainingDaysForFirstWeek + 1);
     const startingCalendarDay = (lastDayOfLastMonth - lastDaysOfLastMonth) + 1;
-    
     const lastDays = [];
+
     for (let day = startingCalendarDay; day <= lastDayOfLastMonth; day++) {
       lastDays.push(day);
     }
-
     return lastDays;
   }
 
   const getCurrentMonthDays = date => {
     const lastDayOfTheMonth = date.getLastDayOfCurrentMonth();
-
     const currentDays = [];
+
     for (let day = 1; day <= lastDayOfTheMonth; day++) {
       currentDays.push(day);
     }
-
     return currentDays;
   }
 
   const getNextMonthDays = date => {
     const lastDayOfTheMonthIndex = date.getLastDayOfCurrentMonthIndex();
     const remainingDaysForFinalWeek = 7 - (lastDayOfTheMonthIndex + 1);
-
     const nextDays = [];
+
     for (let day = 1; day <= remainingDaysForFinalWeek; day++) {
       nextDays.push(day);
     }
-
     return nextDays;
   }
 
@@ -80,31 +78,27 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
       </div>
 
       <div className="current-month-days">
-
-      {lastDaysOfPreviousMonth.map(day => (
-        <PreviousMonthDay
-          key={`${date.getMonth()}${day}${date.getFullYear()}`}
-          date={date}
-          day={day}
-        />
-      ))}
-
-      {currentDaysOfTheMonth.map(day => (
-        <CurrentMonthDay
-          key={`${date.getMonth()}${day}${date.getFullYear()}`}
-          date={date}
-          day={day}
-        />
-      ))}
-
-      {nextDaysOfNextMonth.map(day => (
-        <NextMonthDay
-          key={`${date.getMonth()}${day}${date.getFullYear()}`}
-          date={date}
-          day={day}
-        />
-      ))}
-
+        {lastDaysOfPreviousMonth.map(day => (
+          <PreviousMonthDay
+            key={`${date.getMonth()}${day}${date.getFullYear()}`}
+            date={date}
+            day={day}
+          />
+        ))}
+        {currentDaysOfTheMonth.map(day => (
+          <CurrentMonthDay
+            key={`${date.getMonth()}${day}${date.getFullYear()}`}
+            date={date}
+            day={day}
+          />
+        ))}
+        {nextDaysOfNextMonth.map(day => (
+          <NextMonthDay
+            key={`${date.getMonth()}${day}${date.getFullYear()}`}
+            date={date}
+            day={day}
+          />
+        ))}
       </div>
 
     </div>

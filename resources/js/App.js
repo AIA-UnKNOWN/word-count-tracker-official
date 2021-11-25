@@ -5,10 +5,6 @@ import MyDate from './libs/my-date';
 import Calendar from './components/Calendar';
 import WeeklyTracker from './components/WeeklyTracker';
 
-/*
-TODO:
-  - Fix issue where clicking on previous/next month doesnt navigate more than 1 deep
-*/
 
 const App = () => {
   const [myDate, setMyDate] = useState(new MyDate(
@@ -41,7 +37,9 @@ const App = () => {
           goToPreviousMonth={goToPreviousMonth}
           goToNextMonth={goToNextMonth}
         />
-        <WeeklyTracker />
+        <WeeklyTracker
+          date={myDate}
+        />
       </div>
       
     </div>
