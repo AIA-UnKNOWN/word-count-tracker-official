@@ -6,7 +6,7 @@ import WeekTracker from './weekly-tracker/Week';
 const WeeklyTracker = ({ date }) => {
   
   useEffect(() => {
-    console.log(getStartingDay());
+    
   }, [date]);
 
   return (
