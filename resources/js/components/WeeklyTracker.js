@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-import WeekTracker from './weekly-tracker/Week';
+import WeekTrackers from './weekly-tracker/WeeksFragment';
 
 
 const WeeklyTracker = ({ date }) => {
@@ -88,11 +88,7 @@ const WeeklyTracker = ({ date }) => {
 
       <div className="weekly-tracker">
 
-        <WeekTracker id="week-1" />
-        <WeekTracker id="week-2" />
-        <WeekTracker id="week-3" />
-        <WeekTracker id="week-4" />
-        <WeekTracker id="week-5" />
+        <WeekTrackers weeks={weeks} />
 
       </div>
     </div>

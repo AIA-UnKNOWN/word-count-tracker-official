@@ -28,7 +28,7 @@ const PreviousMonthDay = ({ date, day }) => {
 
   return (
     <div className={value !== 0 ? "day prev-month-day has-word-count" : "day prev-month-day"}>
-      {day}
+      <label id={day}>{day}</label>
       <div className="day-word-count">
         <label>Word Count</label>
         <input
@@ -76,7 +76,7 @@ const CurrentMonthDay = ({ date, day }) => {
 
   return (
     <div className={setClassName()}>
-      {day}
+      <label id={day}>{day}</label>
       <div className="day-word-count">
         <label>Word Count</label>
         <input
@@ -121,7 +121,7 @@ const NextMonthDay = ({ date, day }) => {
 
   return (
     <div className={value !== 0 ? "day next-month-day has-word-count" : "day next-month-day"}>
-      {day}
+      <label id={day}>{day}</label>
       <div className="day-word-count">
         <label>Word Count</label>
         <input
