@@ -5,7 +5,15 @@ import MONTHS from '../utils/months';
 import { PreviousMonthDay, CurrentMonthDay, NextMonthDay } from './calendar/days';
 
 
-const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
+Number.prototype.pad = function(size) {
+  let numberString = String(this);
+  while (numberString.length < (size || 2)) {
+    numberString = "0" + numberString;
+  }
+  return numberString;
+}
+
+const Calendar = ({ date, goToPreviousMonth, goToNextMonth, setIDs }) => {
   const [lastDaysOfPreviousMonth, setLastDaysOfPreviousMonth] = useState([]);
   const [currentDaysOfTheMonth, setCurrentDaysOfTheMonth] = useState([]);
   const [nextDaysOfNextMonth, setNextDaysOfNextMonth] = useState([]);
@@ -18,6 +26,9 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
     setLastDaysOfPreviousMonth(lastDays);
     setCurrentDaysOfTheMonth(currentDays);
     setNextDaysOfNextMonth(nextDays);
+
+    const dates = [...lastDays, ...currentDays, ...nextDays];
+    setIDs(dates.map(date => `${date.month.pad(2)}${date.day.pad(2)}${date.year}`));
   }, [date]);
 
   const getPreviousMonthDays = date => {
@@ -29,8 +40,13 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
     const lastDays = [];
 
     for (let day = startingCalendarDay; day <= lastDayOfLastMonth; day++) {
-      lastDays.push(day);
+      lastDays.push({
+        month: date.getMonth() - 1,
+        day,
+        year: date.getFullYear()
+      });
     }
+
     return lastDays;
   }
 
@@ -39,8 +55,13 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
     const currentDays = [];
 
     for (let day = 1; day <= lastDayOfTheMonth; day++) {
-      currentDays.push(day);
+      currentDays.push({
+        month: date.getMonth(),
+        day,
+        year: date.getFullYear()
+      });
     }
+    
     return currentDays;
   }
 
@@ -50,8 +71,13 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
     const nextDays = [];
 
     for (let day = 1; day <= remainingDaysForFinalWeek; day++) {
-      nextDays.push(day);
+      nextDays.push({
+        month: new Date(date.getFullYear(), date.getMonth() + 1,day).getMonth(),
+        day,
+        year: date.getMonth() === 11 ? date.getFullYear() + 1 : date.getFullYear()
+      });
     }
+    
     return nextDays;
   }
 
@@ -78,21 +104,21 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth }) => {
       </div>
 
       <div className="current-month-days">
-        {lastDaysOfPreviousMonth.map(day => (
+        {lastDaysOfPreviousMonth.map(({ day }) => (
           <PreviousMonthDay
             key={`${date.getMonth()}${day}${date.getFullYear()}`}
             date={date}
             day={day}
           />
         ))}
-        {currentDaysOfTheMonth.map(day => (
+        {currentDaysOfTheMonth.map(({ day }) => (
           <CurrentMonthDay
             key={`${date.getMonth()}${day}${date.getFullYear()}`}
             date={date}
             day={day}
           />
         ))}
-        {nextDaysOfNextMonth.map(day => (
+        {nextDaysOfNextMonth.map(({ day }) => (
           <NextMonthDay
             key={`${date.getMonth()}${day}${date.getFullYear()}`}
             date={date}

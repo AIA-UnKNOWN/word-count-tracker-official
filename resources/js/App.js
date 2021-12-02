@@ -12,6 +12,7 @@ const App = () => {
     new Date().getMonth(),
     new Date().getDate()
   ));
+  const [IDs, setIDs] = useState([]);
 
   const goToPreviousMonth = () => {
     setMyDate(new MyDate(
@@ -36,9 +37,10 @@ const App = () => {
           date={myDate}
           goToPreviousMonth={goToPreviousMonth}
           goToNextMonth={goToNextMonth}
+          setIDs={setIDs}
         />
         <WeeklyTracker
-          date={myDate}
+          ids={IDs}
         />
       </div>
       

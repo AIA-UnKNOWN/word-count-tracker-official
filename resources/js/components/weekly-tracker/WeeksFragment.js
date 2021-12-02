@@ -1,19 +1,36 @@
+import { useState, useEffect } from 'react';
+
 import WeekTracker from './Week';
 
 
-const WeekTrackers = ({ weeks }) => {
-  const calendarWeeks = {...weeks};
-  const calendarWeeksList = Object.keys(calendarWeeks); // Returns an array of {Object} keys
-  
+const WeekTrackers = ({ ids }) => {
+  const weeksCount = (ids.length / 7);
+  const [weeks, setWeeks] = useState([]);
+
+  useEffect(() => {
+    const daysIds = [...ids];
+    const weeksCopy = [];
+    let weekDays = [];
+    for (let count = 0; count < weeksCount; count++) {
+      for (let i = 0; i < 7; i++) {
+        const day = daysIds.shift();
+        weekDays.push(day);
+      }
+      weeksCopy.push(weekDays);
+      weekDays = [];
+    }
+    setWeeks(weeksCopy);
+  }, [ids]);
+
   return (
     <>
-    {calendarWeeksList.map((week, i) => (
-      <WeekTracker
-        key={week}
-        id={`week-${i + 1}`}
-        days={calendarWeeks[week]}
-      />
-    ))}
+      {weeks.map((week, i) => (
+        <WeekTracker
+          key={i}
+          id={`week-${i +1 }`}
+          days={week}
+        />
+      ))}
     </>
   );
 }

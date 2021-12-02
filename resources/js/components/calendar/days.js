@@ -2,13 +2,6 @@ import { useState } from 'react';
 
 import { fetchWordCount, saveWordCount } from './server-requests';
 
-Number.prototype.pad = function(size) {
-  let numberString = String(this);
-  while (numberString.length < (size || 2)) {
-    numberString = "0" + numberString;
-  }
-  return numberString;
-}
 
 const PreviousMonthDay = ({ date, day }) => {
   const lastMonth = date.getLastDayOfLastMonthDate().getMonth();
@@ -37,7 +30,7 @@ const PreviousMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
-          id={id}
+          id={`day-${id}`}
           value={value}
         />
         <button
@@ -85,7 +78,7 @@ const CurrentMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
-          id={id}
+          id={`day-${id}`}
           value={value}
         />
         <button
@@ -99,21 +92,15 @@ const CurrentMonthDay = ({ date, day }) => {
 
 const NextMonthDay = ({ date, day }) => {
   const nextMonth = date.getFirstDayOfNextMonthDate().getMonth();
-  const id = `${nextMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
+  const id = `${nextMonth.pad(2)}${day.pad(2)}${date.getMonth() === 11 ? date.getFullYear() + 1 : date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
 
   const getWordCount = id => {
-    const response = new Promise((resolve, reject) => {
-      if (!fetchWordCount(id)) {
-        reject();
-        return;
-      }
-
+    new Promise((resolve, reject) => {
+      if (!fetchWordCount(id)) return reject();
       resolve(fetchWordCount(id));
-    });
-
-    response
+    })
       .then(data => data.chapter)
       .then(chapter => setValue(chapter.word_count))
       .catch(error => null);
@@ -130,7 +117,7 @@ const NextMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={getWordCount(id)}
           onChange={e => setValue(e.target.value)}
-          id={id}
+          id={`day-${id}`}
           value={value}
         />
         <button
