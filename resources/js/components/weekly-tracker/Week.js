@@ -6,14 +6,17 @@ const WeekTracker = ({ id, days }) => {
 
   useEffect(() => {
 
-    setTimeout(() => {
+    setInterval(() => {
       const values = days.map(day => {
-        const value = parseInt(document.getElementById(`day-${day}`).value);
+        let value = parseInt(document.getElementById(`day-${day}`).value);
+        if (isNaN(value)) {
+          value = 0;
+        }
         return value;
       });
       let total = values.reduce((n1, n2) => n1 + n2);
       setTotalWordCountForTheWeek(total);
-    }, 3000);
+    }, 1000);
 
   }, [days]);
 
