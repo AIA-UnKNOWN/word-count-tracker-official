@@ -51,6 +51,11 @@
       &:active {
         transform: scale(.9);
       }
+
+      i {
+        margin-left: 5px;
+        color: $green;
+      }
     }
   }
 }

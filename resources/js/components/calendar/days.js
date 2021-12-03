@@ -8,6 +8,7 @@ const PreviousMonthDay = ({ date, day }) => {
   const id = `${lastMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+  const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
     loadWordCount();
@@ -32,6 +33,11 @@ const PreviousMonthDay = ({ date, day }) => {
       const button = e.target.nextElementSibling;
       button.click();
     }
+  }
+
+  const typingHandler = e => {
+    setValue(e.target.value);
+    setIsSaved(false);
   }
 
   return (
@@ -44,15 +50,21 @@ const PreviousMonthDay = ({ date, day }) => {
           name="word-count"
           className="word-count-input"
           onFocus={() => loadWordCount()}
-          onChange={e => setValue(e.target.value)}
+          onChange={typingHandler}
           onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
         <button
-          onClick={() => saveWordCount(id, value)}
+          onClick={() => {
+            setIsSaved(true);
+            return saveWordCount(id, value);
+          }}
           className="save-word-count-button"
-        >Save</button>
+        >
+          {isSaved ? "Saved" : "Save"}
+          {isSaved ? (<i className="fas fa-check-circle"></i>) : null}
+        </button>
       </div>
     </div>
   );
@@ -62,6 +74,7 @@ const CurrentMonthDay = ({ date, day }) => {
   const id = `${date.getMonth().pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+  const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
     loadWordCount();
@@ -77,7 +90,9 @@ const CurrentMonthDay = ({ date, day }) => {
       resolve(fetchWordCount(id));
     })
       .then(data => data.chapter)
-      .then(chapter => setValue(chapter.word_count))
+      .then(chapter => {
+        setValue(chapter.word_count);
+      })
       .catch(error => null);
   }
 
@@ -86,6 +101,11 @@ const CurrentMonthDay = ({ date, day }) => {
       const button = e.target.nextElementSibling;
       button.click();
     }
+  }
+
+  const typingHandler = e => {
+    setValue(e.target.value);
+    setIsSaved(false);
   }
 
   const isDateExactlyToday = day => {
@@ -108,15 +128,21 @@ const CurrentMonthDay = ({ date, day }) => {
           name="word-count"
           className="word-count-input"
           onFocus={() => loadWordCount()}
-          onChange={e => setValue(e.target.value)}
+          onChange={typingHandler}
           onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
         <button
-          onClick={() => saveWordCount(id, value)}
+          onClick={() => {
+            setIsSaved(true);
+            return saveWordCount(id, value);
+          }}
           className="save-word-count-button"
-        >Save</button>
+        >
+          {isSaved ? "Saved" : "Save"}
+          {isSaved ? (<i className="fas fa-check-circle"></i>) : null}
+        </button>
       </div>
     </div>
   );
@@ -127,6 +153,7 @@ const NextMonthDay = ({ date, day }) => {
   const id = `${nextMonth.pad(2)}${day.pad(2)}${date.getMonth() === 11 ? date.getFullYear() + 1 : date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+  const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
     loadWordCount();
@@ -153,6 +180,11 @@ const NextMonthDay = ({ date, day }) => {
     }
   }
 
+  const typingHandler = e => {
+    setValue(e.target.value);
+    setIsSaved(false);
+  }
+
   return (
     <div className={value !== 0 ? "day next-month-day has-word-count" : "day next-month-day"}>
       <label id={day}>{day}</label>
@@ -163,15 +195,21 @@ const NextMonthDay = ({ date, day }) => {
           name="word-count"
           className="word-count-input"
           onFocus={() => loadWordCount()}
-          onChange={e => setValue(e.target.value)}
+          onChange={typingHandler}
           onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
         <button
-          onClick={() => saveWordCount(id, value)}
+          onClick={() => {
+            setIsSaved(true);
+            return saveWordCount(id, value);
+          }}
           className="save-word-count-button"
-        >Save</button>
+        >
+          {isSaved ? "Saved" : "Save"}
+          {isSaved ? (<i className="fas fa-check-circle"></i>) : null}
+        </button>
       </div>
     </div>
   );
