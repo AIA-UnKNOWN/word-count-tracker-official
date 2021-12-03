@@ -27,6 +27,13 @@ const PreviousMonthDay = ({ date, day }) => {
       .catch(error => null);
   }
 
+  const onEnter = e => {
+    if (e.key === "Enter") {
+      const button = e.target.nextElementSibling;
+      button.click();
+    }
+  }
+
   return (
     <div className={value !== 0 ? "day prev-month-day has-word-count" : "day prev-month-day"}>
       <label id={day}>{day}</label>
@@ -38,6 +45,7 @@ const PreviousMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
+          onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
@@ -73,6 +81,13 @@ const CurrentMonthDay = ({ date, day }) => {
       .catch(error => null);
   }
 
+  const onEnter = e => {
+    if (e.key === "Enter") {
+      const button = e.target.nextElementSibling;
+      button.click();
+    }
+  }
+
   const isDateExactlyToday = day => {
     return date.getMonth() === new Date().getMonth() && day === date.getDate();
   }
@@ -94,6 +109,7 @@ const CurrentMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
+          onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
@@ -130,6 +146,13 @@ const NextMonthDay = ({ date, day }) => {
       .catch(error => null);
   }
 
+  const onEnter = e => {
+    if (e.key === "Enter") {
+      const button = e.target.nextElementSibling;
+      button.click();
+    }
+  }
+
   return (
     <div className={value !== 0 ? "day next-month-day has-word-count" : "day next-month-day"}>
       <label id={day}>{day}</label>
@@ -141,6 +164,7 @@ const NextMonthDay = ({ date, day }) => {
           className="word-count-input"
           onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
+          onKeyUp={onEnter}
           id={`day-${id}`}
           value={value}
         />
