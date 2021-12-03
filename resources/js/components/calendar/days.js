@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { fetchWordCount, saveWordCount } from './server-requests';
 
@@ -8,6 +8,14 @@ const PreviousMonthDay = ({ date, day }) => {
   const id = `${lastMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    loadWordCount();
+  }, []);
+
+  const loadWordCount = () => {
+    getWordCount(id);
+  }
 
   const getWordCount = id => {
     new Promise((resolve, reject) => {
@@ -28,7 +36,7 @@ const PreviousMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={getWordCount(id)}
+          onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
           id={`day-${id}`}
           value={value}
@@ -46,6 +54,14 @@ const CurrentMonthDay = ({ date, day }) => {
   const id = `${date.getMonth().pad(2)}${day.pad(2)}${date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    loadWordCount();
+  }, []);
+
+  const loadWordCount = () => {
+    getWordCount(id);
+  }
 
   const getWordCount = id => {
     new Promise((resolve, reject) => {
@@ -76,7 +92,7 @@ const CurrentMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={getWordCount(id)}
+          onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
           id={`day-${id}`}
           value={value}
@@ -95,6 +111,14 @@ const NextMonthDay = ({ date, day }) => {
   const id = `${nextMonth.pad(2)}${day.pad(2)}${date.getMonth() === 11 ? date.getFullYear() + 1 : date.getFullYear()}`;
 
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    loadWordCount();
+  }, []);
+
+  const loadWordCount = () => {
+    getWordCount(id);
+  }
 
   const getWordCount = id => {
     new Promise((resolve, reject) => {
@@ -115,7 +139,7 @@ const NextMonthDay = ({ date, day }) => {
           type="number"
           name="word-count"
           className="word-count-input"
-          onFocus={getWordCount(id)}
+          onFocus={() => loadWordCount()}
           onChange={e => setValue(e.target.value)}
           id={`day-${id}`}
           value={value}
