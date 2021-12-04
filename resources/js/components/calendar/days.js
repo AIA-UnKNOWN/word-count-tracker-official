@@ -5,7 +5,8 @@ import { fetchWordCount, saveWordCount } from './server-requests';
 
 const PreviousMonthDay = ({ date, day }) => {
   const lastMonth = date.getLastDayOfLastMonthDate().getMonth();
-  const id = `${lastMonth.pad(2)}${day.pad(2)}${date.getFullYear()}`;
+  const year = date.getMonth() === 0 ? date.getFullYear() - 1 : date.getFullYear();
+  const id = `${lastMonth.pad(2)}${day.pad(2)}${year}`;
 
   const [value, setValue] = useState(0);
   const [isSaved, setIsSaved] = useState(true);

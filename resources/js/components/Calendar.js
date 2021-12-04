@@ -41,9 +41,9 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth, setIDs }) => {
 
     for (let day = startingCalendarDay; day <= lastDayOfLastMonth; day++) {
       lastDays.push({
-        month: date.getMonth() - 1,
+        month: date.getMonth() === 0 ? 11 : date.getMonth() - 1,
         day,
-        year: date.getFullYear()
+        year: date.getMonth() === 0 ? date.getFullYear() - 1 : date.getFullYear()
       });
     }
 
