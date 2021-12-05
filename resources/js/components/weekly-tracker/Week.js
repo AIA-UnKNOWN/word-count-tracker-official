@@ -1,27 +1,31 @@
 import { useState, useEffect } from 'react';
 
+import { fetchWordCount } from '../calendar/server-requests';
+
 
 const WeekTracker = ({ id, days }) => {
   const [totalWordCountForTheWeek, setTotalWordCountForTheWeek] = useState(0);
 
   useEffect(() => {
-
     setInterval(() => {
-      const values = days.map(day => {
-        let value = parseInt(document.getElementById(`day-${day}`).value);
-        if (isNaN(value)) value = 0;
-        // const input = document.getElementById(`day-${day}`);
-        // if (input === null) console.log(day, input);
-        console.log(value);
-        return value;
-      });
-      let total = values.reduce((n1, n2) => n1 + n2);
-      setTotalWordCountForTheWeek(total);
+
+      Promise.all(days.map(day => fetchWordCount(day)))
+        .then(arrayOfResponse => {
+
+          const values = arrayOfResponse.map(res => {
+            if (res.chapter === null) return 0;
+            if (typeof res.chapter === undefined) return 0;
+            return res.chapter.word_count;
+          });
+
+          const total = values.reduce((n1, n2) => n1 + n2);
+          setTotalWordCountForTheWeek(total);
+
+        })
+        .catch(error => console.log(error));
+
     }, 1000);
-
-  }, []);
-
-  // console.log(id, totalWordCountForTheWeek);
+  });
 
   return (
     <div id={id} className="week-tracker">
@@ -30,7 +34,7 @@ const WeekTracker = ({ id, days }) => {
         <label>Total Word Count</label>
       </div>
       <div className="counts">
-        <div className="current-count">{totalWordCountForTheWeek || 0}</div>
+        <div className="current-count">{totalWordCountForTheWeek}</div>
         <div className="slash">/</div>
         <div className="total-count">12000</div>
       </div>
