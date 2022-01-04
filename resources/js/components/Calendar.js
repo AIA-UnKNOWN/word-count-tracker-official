@@ -29,6 +29,8 @@ const Calendar = ({ date, goToPreviousMonth, goToNextMonth, setIDs }) => {
 
     const dates = [...lastDays, ...currentDays, ...nextDays];
     setIDs(dates.map(date => `${date.month.pad(2)}${date.day.pad(2)}${date.year}`));
+
+    return () => setIDs([]);
   }, [date]);
 
   const getPreviousMonthDays = date => {

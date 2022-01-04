@@ -12,7 +12,15 @@ const PreviousMonthDay = ({ date, day }) => {
   const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
-    loadWordCount();
+    let isFetching = true;
+
+    if (isFetching) {
+      loadWordCount();
+    }
+
+    return () => {
+      isFetching = false;
+    }
   }, []);
 
   const loadWordCount = () => {
@@ -78,7 +86,15 @@ const CurrentMonthDay = ({ date, day }) => {
   const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
-    loadWordCount();
+    let isFetching = true;
+
+    if (isFetching) {
+      loadWordCount();
+    }
+
+    return () => {
+      isFetching = false;
+    }
   }, []);
 
   const loadWordCount = () => {
@@ -157,9 +173,17 @@ const NextMonthDay = ({ date, day }) => {
   const [isSaved, setIsSaved] = useState(true);
 
   useEffect(() => {
-    loadWordCount();
-  }, []);
+    let isFetching = true;
 
+    if (isFetching) {
+      loadWordCount();
+    }
+
+    return () => {
+      isFetching = false;
+    }
+  }, []);
+  
   const loadWordCount = () => {
     getWordCount(id);
   }

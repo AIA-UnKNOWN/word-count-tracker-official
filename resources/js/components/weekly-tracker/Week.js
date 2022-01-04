@@ -7,25 +7,31 @@ const WeekTracker = ({ id, days }) => {
   const [totalWordCountForTheWeek, setTotalWordCountForTheWeek] = useState(0);
 
   useEffect(() => {
-    setInterval(() => {
+    let isFetching = true;
 
-      Promise.all(days.map(day => fetchWordCount(day)))
-        .then(arrayOfResponse => {
+    if (isFetching) {
+      setInterval(() => {
+        Promise.all(days.map(day => fetchWordCount(day)))
+          .then(arrayOfResponse => {
+            const values = arrayOfResponse.map(res => {
+              if (res.chapter === null) return 0;
+              if (typeof res.chapter === undefined) return 0;
+              return res.chapter.word_count;
+            });
 
-          const values = arrayOfResponse.map(res => {
-            if (res.chapter === null) return 0;
-            if (typeof res.chapter === undefined) return 0;
-            return res.chapter.word_count;
+            const total = values.reduce((n1, n2) => n1 + n2);
+            setTotalWordCountForTheWeek(total);
+          })
+          .catch(error => {
+            console.log(error);
           });
-
-          const total = values.reduce((n1, n2) => n1 + n2);
-          setTotalWordCountForTheWeek(total);
-
-        })
-        .catch(error => console.log(error));
-
-    }, 1000);
-  });
+      }, 3000);
+    }
+    
+    return () => {
+      isFetching = false;
+    }
+  }, [days]);
 
   return (
     <div id={id} className="week-tracker">
